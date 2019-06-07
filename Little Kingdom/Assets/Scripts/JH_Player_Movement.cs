@@ -33,12 +33,25 @@ public class JH_Player_Movement : MonoBehaviour
         {
             Vector3 v3_lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
             transform.LookAt(v3_lookAt);
+
+            // Sends the command to attack/ gather
+            if (Input.GetMouseButtonDown(0))
+            {
+                GetComponent<JH_Player_Attack>().StartAttack();
+            }
+
+            // Sends the command to interact
+            if (Input.GetMouseButtonDown(1))
+            {
+
+            }
         }
 
     }
 
     void MovePlayer()
     {
+        // Toggles between walking and running
         if (Input.GetKey(KeyCode.LeftShift)) fl_changeSpeed = fl_movementSpeed * 2;
         else fl_changeSpeed = fl_movementSpeed;
 
@@ -52,6 +65,7 @@ public class JH_Player_Movement : MonoBehaviour
 
     void LockCamera()
     {
+        // Keeps camera locked on the player character
         go_camera.transform.position = new Vector3(transform.position.x, 0, transform.position.z) + v3_cameraLock;
     }
 }
