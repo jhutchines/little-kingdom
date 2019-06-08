@@ -7,6 +7,8 @@ public class JH_Send_Damage : MonoBehaviour
     public int in_damageDealt;
     public float fl_damageForce;
 
+    public int in_gatherDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +29,16 @@ public class JH_Send_Damage : MonoBehaviour
             if (other.GetComponent<JH_Character_Health>().owningTeam != transform.parent.GetComponent<JH_Character_Health>().owningTeam)
             {
                 other.GetComponent<JH_Character_Health>().in_characterHealth -= in_damageDealt;
-                other.attachedRigidbody.AddForce((transform.forward * fl_damageForce) + 
-                                                  transform.up * (fl_damageForce / 2), 
+                other.attachedRigidbody.AddForce((transform.forward * fl_damageForce),
                                                   ForceMode.Impulse);
                 gameObject.SetActive(false);
             }
+        }
+
+        if (other.GetComponent<JH_Resource_Interact>() != null)
+        {
+            other.GetComponent<JH_Resource_Interact>().in_resourceHealth -= in_gatherDamage;
+            other.GetComponent<JH_Resource_Interact>().ResourceHit();
         }
     }
 }

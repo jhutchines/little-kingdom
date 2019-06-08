@@ -7,6 +7,11 @@ public class JH_Resource_Interact : MonoBehaviour
     public JH_Game_Manager.ResourceType resourceType;
     public int in_resourceHealth;
 
+    public Animator anim_resource;
+    private bool bl_canInteract = true;
+    private bool bl_moveResource;
+    private Vector3 v3_moveTowards;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +21,10 @@ public class JH_Resource_Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (bl_moveResource)
+        {
+            ResourceMove();
+        }
     }
 
     void ResourceSetup()
@@ -50,5 +58,32 @@ public class JH_Resource_Interact : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void ResourceHit()
+    {
+        if (in_resourceHealth > 0)
+        {
+            anim_resource.Play("Resource Hit");
+        }
+
+        else
+        {
+            if (bl_canInteract) StartCoroutine(ResourceDestroy());
+        }
+    }
+
+    void ResourceMove()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, v3_moveTowards, 0.05f);
+        if (transform.position == v3_moveTowards) Destroy(gameObject);
+    }
+
+    IEnumerator ResourceDestroy()
+    {
+        bl_canInteract = false;
+        yield return new WaitForSeconds(5);
+        v3_moveTowards = new Vector3(transform.position.x, transform.position.y - 4, transform.position.z);
+        bl_moveResource = true;
     }
 }

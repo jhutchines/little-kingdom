@@ -29,13 +29,14 @@ public class JH_Player_Movement : MonoBehaviour
     {
         // Rotates the player character to face the mouse position
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        LayerMask layerMask = LayerMask.GetMask("Ground");
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask))
         {
             Vector3 v3_lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
             transform.LookAt(v3_lookAt);
 
             // Sends the command to attack/ gather
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftShift))
             {
                 GetComponent<JH_Player_Attack>().StartAttack();
             }
@@ -52,7 +53,7 @@ public class JH_Player_Movement : MonoBehaviour
     void MovePlayer()
     {
         // Toggles between walking and running
-        if (Input.GetKey(KeyCode.LeftShift)) fl_changeSpeed = fl_movementSpeed * 2;
+        if (Input.GetKey(KeyCode.LeftShift) && GetComponent<JH_Player_Attack>().bl_canAttack) fl_changeSpeed = fl_movementSpeed * 2;
         else fl_changeSpeed = fl_movementSpeed;
 
         // Moves the player character in the direction of the key pressed

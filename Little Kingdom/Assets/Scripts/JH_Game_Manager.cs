@@ -22,6 +22,12 @@ public class JH_Game_Manager : MonoBehaviour
         Enemy
     }
 
+    public enum TransparentType
+    {
+        Single,
+        All
+    }
+
     // Start is called before the first frame update
     void Start()
     {
