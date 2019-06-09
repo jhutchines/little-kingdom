@@ -5,6 +5,7 @@ using UnityEngine;
 public class JH_Resource_Interact : MonoBehaviour
 {
     public JH_Game_Manager.ResourceType resourceType;
+    public JH_Game_Manager.ItemType itemType;
     public int in_resourceHealth;
 
     public Animator anim_resource;
@@ -60,6 +61,7 @@ public class JH_Resource_Interact : MonoBehaviour
         }
     }
 
+    // Resource node takes damage and drops items when hit
     public void ResourceHit()
     {
         if (in_resourceHealth > 0)
@@ -73,12 +75,14 @@ public class JH_Resource_Interact : MonoBehaviour
         }
     }
 
+    // Used for when the resource node has been depleted
     void ResourceMove()
     {
         transform.position = Vector3.MoveTowards(transform.position, v3_moveTowards, 0.05f);
         if (transform.position == v3_moveTowards) Destroy(gameObject);
     }
 
+    // Leaves the resource node in the world for a few seconds after being depleted
     IEnumerator ResourceDestroy()
     {
         bl_canInteract = false;

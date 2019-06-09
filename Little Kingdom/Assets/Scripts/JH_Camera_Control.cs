@@ -26,12 +26,15 @@ public class JH_Camera_Control : MonoBehaviour
         CheckBlock();
     }
 
+    // Used to turn certain objects transparent
     void CheckBlock()
     {
         Vector3 v3_localForward = transform.worldToLocalMatrix.MultiplyVector(transform.forward);
 
         RaycastHit mouseHit;
         RaycastHit playerHit;
+
+        // Makes certain objects transparent if the mouse is over it
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit, Mathf.Infinity))
         {
             if (mouseHit.transform.parent == null) go_mouseObjectHit = mouseHit.transform.gameObject;
@@ -41,6 +44,8 @@ public class JH_Camera_Control : MonoBehaviour
                 FindMouseParent();
             }
         }
+
+        // Makes certain objects transparent if the player is behind it
         if (Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2)), 
                             out playerHit, Mathf.Infinity))
         {
@@ -54,6 +59,7 @@ public class JH_Camera_Control : MonoBehaviour
         
     }
 
+    // Finds the highest parent object of the object the mouse is over
     void FindMouseParent()
     {
         while (go_mouseObjectParent.transform.parent != null)
@@ -63,6 +69,7 @@ public class JH_Camera_Control : MonoBehaviour
         }
     }
 
+    // Finds the highest parent object of the object the player is behind
     void FindPlayerParent()
     {
         while (go_playerObjectParent.transform.parent != null)

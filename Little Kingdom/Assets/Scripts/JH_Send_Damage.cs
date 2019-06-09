@@ -21,9 +21,9 @@ public class JH_Send_Damage : MonoBehaviour
         
     }
 
-    // Deals damage and forces target away from the attacker
     private void OnTriggerEnter(Collider other)
     {
+        // Deals damage and forces target away from the attacker
         if (other.GetComponent<JH_Character_Health>() != null)
         {
             if (other.GetComponent<JH_Character_Health>().owningTeam != transform.parent.GetComponent<JH_Character_Health>().owningTeam)
@@ -35,10 +35,18 @@ public class JH_Send_Damage : MonoBehaviour
             }
         }
 
+        // Allows the player to gather resources if correct item is equipped
         if (other.GetComponent<JH_Resource_Interact>() != null)
         {
-            other.GetComponent<JH_Resource_Interact>().in_resourceHealth -= in_gatherDamage;
-            other.GetComponent<JH_Resource_Interact>().ResourceHit();
+            if (other.GetComponent<JH_Resource_Interact>().in_resourceHealth > 0)
+            {
+                if (other.GetComponent<JH_Resource_Interact>().itemType == transform.parent.GetComponent<JH_Player_Inventory>().itemEquipped)
+                {
+                    other.GetComponent<JH_Resource_Interact>().in_resourceHealth -= in_gatherDamage;
+                    transform.parent.GetComponent<JH_Player_Inventory>().LoseDurability();
+                    other.GetComponent<JH_Resource_Interact>().ResourceHit();
+                }
+            }
         }
     }
 }

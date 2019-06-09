@@ -28,6 +28,15 @@ public class JH_Game_Manager : MonoBehaviour
         All
     }
 
+    public enum ItemType
+    {
+        None,
+        Axe,
+        Pickaxe,
+        Sickle,
+        Sword
+    }
+
     // Start is called before the first frame update
     void Start()
     {

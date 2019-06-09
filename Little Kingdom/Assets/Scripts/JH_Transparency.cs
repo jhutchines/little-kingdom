@@ -19,6 +19,7 @@ public class JH_Transparency : MonoBehaviour
         CheckTransparent();
     }
 
+    // Checks to see if the object that the mouse is over or player is behind should be made transparent
     void CheckTransparent()
     {
         if (m_camera.go_mouseObjectHit == gameObject || m_camera.go_playerObjectHit == gameObject)
@@ -30,7 +31,7 @@ public class JH_Transparency : MonoBehaviour
             MakeOpaque();
         }
 
-
+        // Makes child objects transparent too
         if (transparentType == JH_Game_Manager.TransparentType.All)
         {
             if (m_camera.go_mouseObjectHit == gameObject ||  m_camera.go_playerObjectHit == gameObject)
@@ -44,6 +45,7 @@ public class JH_Transparency : MonoBehaviour
         }
     }
 
+    // Turns the selected object transparent
     void MakeTransparent()
     {
         Color c_changeAlpha = GetComponent<Renderer>().material.color;
@@ -51,6 +53,7 @@ public class JH_Transparency : MonoBehaviour
         GetComponent<Renderer>().material.color = c_changeAlpha;
     }
 
+    // Turns the selected object opaque
     void MakeOpaque()
     {
         Color c_changeAlpha = GetComponent<Renderer>().material.color;
@@ -58,6 +61,7 @@ public class JH_Transparency : MonoBehaviour
         GetComponent<Renderer>().material.color = c_changeAlpha;
     }
 
+    // Makes all child objects transparent
     void MakeAllTransparent()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -68,6 +72,7 @@ public class JH_Transparency : MonoBehaviour
         }
     }
 
+    // Makes all child objects opaque
     void MakeAllOpaque()
     {
         for (int i = 0; i < transform.childCount; i++)
